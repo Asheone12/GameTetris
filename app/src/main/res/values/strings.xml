@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">GameTetris</string>
+    <string name="invert_rotation">Invert rotation</string>
+    <string name="btn_startgame">Start Game</string>
+    <string name="btn_settings">Settings</string>
+    <string name="btn_aigame">AI Game</string>
+    <string name="txt_lines">Lines: 0</string>
+    <string name="txt_score">Score: 0</string>
+    <string name="txt_level">Level: 1</string>
+    <string name="btn_pause">Pause</string>
+    <string name="btn_unpause">Unpause</string>
+    <string name="btn_restart">Restart</string>
+    <string name="chip_ghost">Ghost</string>
+    <string name="txt_gridSize">Grid size:</string>
+    <string name="txt_startingHeight">Starting height:</string>
+    <string name="txt_gameLevel">Game level:</string>
+    <string name="txt_gameOptions">Game options</string>
+    <string name="txt_selectTheme">Select colour theme:</string>
+    <string name="btn_customizeTheme">Customize</string>
+    <string name="btn_apply">Apply</string>
+    <string name="txt_time">Time: 00:00</string>
+    <string name="preference_file">com.muen.gametetris.settings_file</string>
+</resources>
