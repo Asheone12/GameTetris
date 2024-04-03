@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.muen.gametetris.NavDestination
 import com.muen.gametetris.R
+import com.muen.gametetris.game.Point
 import com.muen.gametetris.settings.SettingsHandler
 import com.muen.gametetris.ui.components.DropdownMenuSurface
 import com.muen.gametetris.ui.components.TetrisDropdownMenuItem
@@ -46,7 +47,9 @@ fun HomeScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
             onClick = {
                 navController.navigate(
                     route = NavDestination.Tetris.route,
@@ -67,7 +70,7 @@ fun HomeScreen(navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 32.dp)
+                .padding(top = 16.dp)
                 .border(
                     BorderStroke(1.dp, ghostIconTint),
                     shape = RoundedCornerShape(8.dp)
@@ -86,31 +89,8 @@ fun HomeScreen(navController: NavController) {
                 )
             }
         }
-        //倒转
-        /*Divider(modifier = Modifier.padding(vertical = 16.dp))
-        Surface(
-            shape = RoundedCornerShape(10.dp),
-            tonalElevation = 8.dp,
-            shadowElevation = 8.dp,
-            modifier = Modifier.padding(vertical = 8.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                var invertRotation by remember { mutableStateOf(SettingsHandler.getInvertRotation()) }
-                Checkbox(
-                    checked = invertRotation,
-                    onCheckedChange = { checked ->
-                        SettingsHandler.setInvertRotation(checked)
-                        invertRotation = checked
-                    }
-                )
-                TetrisText(text = stringResource(id = R.string.invert_rotation))
-            }
-        }*/
         // Grid size menu
-   /*     val gridWidth = SettingsHandler.getGridWidth()
+        val gridWidth = SettingsHandler.getGridWidth()
         val gridHeight = SettingsHandler.getGridHeight()
         var gridSizeMenuExpanded by remember { mutableStateOf(false) }
         DropdownMenuSurface(
@@ -147,35 +127,7 @@ fun HomeScreen(navController: NavController) {
                     )
                 }
             }
-        }*/
-        // Starting height setting menu 初始高度
-        /*var startingHeightMenuExpanded by remember { mutableStateOf(false) }
-        val startingHeight = SettingsHandler.getStartingHeight()
-        DropdownMenuSurface(
-            title = stringResource(id = R.string.txt_startingHeight),
-            selectionText = startingHeight.toString(),
-            modifier = Modifier.padding(vertical = 8.dp),
-            menuExpanded = startingHeightMenuExpanded,
-            onMenuClick = { startingHeightMenuExpanded = !startingHeightMenuExpanded }
-        ) {
-            DropdownMenu(
-                expanded = startingHeightMenuExpanded,
-                onDismissRequest = { startingHeightMenuExpanded = false }
-            ) {
-                for (i in 0 until 9) {
-                    TetrisDropdownMenuItem(
-                        item = TetrisDropdownMenuItemData(
-                            title = i.toString(),
-                            selected = i == startingHeight,
-                            onClick = {
-                                SettingsHandler.setStartingHeight(i)
-                                startingHeightMenuExpanded = false
-                            }
-                        )
-                    )
-                }
-            }
-        }*/
+        }
 
         // Game level setting menu 游戏等级
         var gameLevelMenuExpanded by remember { mutableStateOf(false) }

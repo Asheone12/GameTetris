@@ -3,8 +3,6 @@ package com.muen.gametetris.ui.screens.tetris
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,15 +22,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.muen.gametetris.R
+import com.muen.gametetris.game.Controller
 import com.muen.gametetris.game.Direction
 import com.muen.gametetris.settings.SettingsHandler
-import com.muen.gametetris.ui.components.GameActionButton
 import com.muen.gametetris.ui.components.TetrisGrid
 import com.muen.gametetris.ui.components.TetrisText
 import com.muen.gametetris.ui.components.UpcomingTetrominoesBox
 import com.muen.gametetris.ui.theme.LocalColors
-import com.muen.gametetris.R
-import com.muen.gametetris.game.Controller
 import kotlinx.coroutines.delay
 
 /* AndroidTetris TetrisScreen: the composable that actually displays the gameplay */
@@ -57,44 +54,16 @@ fun TetrisScreen() {
                     width = 120.dp,
                     height = 200.dp,
                     viewModel = viewModel,
-                    modifier = Modifier.padding(bottom = 32.dp)
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
                 Stats(viewModel)
                 TimeText(viewModel)
-                //阴影
-                /*val ghostIconTint = if (isGhostEnabled) Color.Green else Color.Red
-                IconButton(
-                    onClick = {
-                        isGhostEnabled = !isGhostEnabled
-                        viewModel.setTheGhostEnabled(isGhostEnabled)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 32.dp)
-                        .border(
-                            BorderStroke(1.dp, ghostIconTint),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        val icon = if (isGhostEnabled) R.drawable.check else R.drawable.close
-                        Icon(
-                            painter = painterResource(id = icon),
-                            contentDescription = "启用阴影",
-                            tint = ghostIconTint
-                        )
-                        TetrisText(
-                            text = "阴影",
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                    }
-                }*/
                 //重新开始
                 IconButton(
                     onClick = { viewModel.restartGame() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 32.dp)
+                        .padding(top = 16.dp)
                         .border(
                             BorderStroke(1.dp, colors.ForegroundColor),
                             shape = RoundedCornerShape(8.dp)
@@ -123,7 +92,7 @@ fun TetrisScreen() {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 32.dp)
+                        .padding(top = 16.dp)
                         .border(
                             BorderStroke(1.dp, colors.ForegroundColor),
                             shape = RoundedCornerShape(8.dp)
@@ -165,41 +134,7 @@ fun TetrisScreen() {
                         Controller.DoubleClick ->viewModel.move(Direction.Down)
                     }
                 }
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(fraction = fraction)
-                        .padding(top = 32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    GameActionButton(
-                        drawable = R.drawable.arrow_up,
-                        actionDelay = 100L,
-                        onActionDown = { viewModel.rotate() }
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(fraction = fraction),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    GameActionButton(
-                        drawable = R.drawable.arrow_left,
-                        onActionDown = { viewModel.move(Direction.Left) }
-                    )
-                    GameActionButton(
-                        drawable = R.drawable.arrow_right,
-                        onActionDown = { viewModel.move(Direction.Right) }
-                    )
-                }
-                Box(
-                    modifier = Modifier.fillMaxWidth(fraction = fraction),
-                    contentAlignment = Alignment.Center
-                ) {
-                    GameActionButton(
-                        drawable = R.drawable.arrow_down,
-                        onActionDown = { viewModel.move(Direction.Down) }
-                    )
-                }
+
             }
         }
     }
