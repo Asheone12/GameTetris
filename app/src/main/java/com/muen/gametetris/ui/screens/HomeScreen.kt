@@ -61,6 +61,21 @@ fun HomeScreen(navController: NavController) {
             Text("开始游戏")
         }
 
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            onClick = {
+                navController.navigate(
+                    route = NavDestination.About.route,
+                ) {
+                    launchSingleTop = true
+                }
+            }
+        ) {
+            Text("关于")
+        }
+
         //阴影
         val ghostIconTint = if (isGhostEnabled) Color.Green else Color.Red
         IconButton(

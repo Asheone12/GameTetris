@@ -3,6 +3,8 @@
     <string name="invert_rotation">逆向旋转</string>
     <string name="btn_startgame">开始游戏</string>
     <string name="btn_settings">设置</string>
+    <string name="title_about">关于</string>
+    <string name="about_game">游戏玩法：左右滑动屏幕操控方块左右移动，向上滑动屏幕可以旋转方块，连点屏幕可以加快方块的下落</string>
     <string name="btn_aigame">AI游戏</string>
     <string name="txt_lines">线: 0</string>
     <string name="txt_score">分数: 0</string>
