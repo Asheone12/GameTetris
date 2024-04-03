@@ -1,6 +1,5 @@
 package com.muen.gametetris.ui.components
 
-import android.util.Log
 import android.view.MotionEvent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.muen.gametetris.MMKVManage
 import com.muen.gametetris.R
 import com.muen.gametetris.game.Controller
 import com.muen.gametetris.game.TetrominoCode
@@ -44,9 +44,6 @@ fun TetrisGrid(
     gridHeight: Int = 22,
     onMotionChange: (Int) -> Unit
 ) {
-    var startX:Float = 0f
-    var startY:Float = 0f
-    var lastClickTime:Long = 0
 
     // State handling
     remember { mutableStateOf(viewModel.tetrisGridState.recompositionCount) } // Used to trigger recomposition
@@ -67,52 +64,46 @@ fun TetrisGrid(
             .motionEventSpy {
                 when (it.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        startX = it.x
-                        startY = it.y
+                        MMKVManage.startX = it.x
+                        MMKVManage.startY = it.y
 
                         val clickTime = System.currentTimeMillis()
-                        if(clickTime - lastClickTime < 500){
-                            Log.d("123","双击666")
+                        if (clickTime - MMKVManage.lastClickTime < 500) {
+                            //双击
                             onMotionChange.invoke(Controller.DoubleClick)
                         }
-                        lastClickTime = clickTime
-
-                        Log.d("123","Down startX = $startX , startY = $startY")
+                        MMKVManage.lastClickTime = clickTime
                     }
+
                     MotionEvent.ACTION_UP -> {
                         val endX = it.x
                         val endY = it.y
-                        val dx = endX - startX
-                        val dy = endY - startY
+                        val dx = endX - MMKVManage.startX
+                        val dy = endY - MMKVManage.startY
 
-                        Log.d("123","UP startX=$startX , startY = $startY , x = ${it.x} , y =${it.y} dx = $dx , dy = $dy")
-                            if (abs(dx) > abs(dy)) {
-                                //水平移动更多
-                                if(abs(dx) > 10){
-                                    if (dx > 0) {
-                                        //right
-                                        Log.d("123","右")
-                                        onMotionChange.invoke(Controller.Right)
-                                    } else {
-                                        //left
-                                        Log.d("123","左")
-                                        onMotionChange.invoke(Controller.Left)
-                                    }
-                                }
-                            } else if (abs(dx) < abs(dy)) {
-                                //竖直移动更多
-                                if(abs(dy) > 10){
-                                    if (dy > 0) {
-                                        //down
-                                        Log.d("123","下")
-                                        onMotionChange.invoke(Controller.Down)
-                                    } else {
-                                        //up
-                                        Log.d("123","上")
-                                        onMotionChange.invoke(Controller.Up)
-                                    }
+                        if (abs(dx) > abs(dy)) {
+                            //水平移动更多
+                            if (abs(dx) > 10) {
+                                if (dx > 0) {
+                                    //right
+                                    onMotionChange.invoke(Controller.Right)
+                                } else {
+                                    //left
+                                    onMotionChange.invoke(Controller.Left)
                                 }
                             }
+                        } else if (abs(dx) < abs(dy)) {
+                            //竖直移动更多
+                            if (abs(dy) > 10) {
+                                if (dy > 0) {
+                                    //down
+                                    onMotionChange.invoke(Controller.Down)
+                                } else {
+                                    //up
+                                    onMotionChange.invoke(Controller.Up)
+                                }
+                            }
+                        }
 
                     }
                 }
