@@ -1,16 +1,17 @@
 package com.muen.gametetris.ui.screens
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Text
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,17 +19,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.muen.gametetris.game.Point
-import com.muen.gametetris.settings.SettingsHandler
 import com.muen.gametetris.NavDestination
 import com.muen.gametetris.R
+import com.muen.gametetris.settings.SettingsHandler
 import com.muen.gametetris.ui.components.DropdownMenuSurface
 import com.muen.gametetris.ui.components.TetrisDropdownMenuItem
 import com.muen.gametetris.ui.components.TetrisDropdownMenuItemData
 import com.muen.gametetris.ui.components.TetrisText
+import com.muen.gametetris.ui.screens.tetris.TetrisScreenViewModel
 
 /* AndroidTetris application entry point screen */
 
@@ -36,6 +39,8 @@ import com.muen.gametetris.ui.components.TetrisText
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    val viewModel by remember { mutableStateOf(TetrisScreenViewModel()) }
+    var isGhostEnabled by remember { mutableStateOf(viewModel.isGhostEnabled()) }
     Column(
         modifier = Modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -50,9 +55,39 @@ fun HomeScreen(navController: NavController) {
                 }
             }
         ) {
-            Text("Start Game")
+            Text("开始游戏")
         }
-        Divider(modifier = Modifier.padding(vertical = 16.dp))
+
+        //阴影
+        val ghostIconTint = if (isGhostEnabled) Color.Green else Color.Red
+        IconButton(
+            onClick = {
+                isGhostEnabled = !isGhostEnabled
+                viewModel.setTheGhostEnabled(isGhostEnabled)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp)
+                .border(
+                    BorderStroke(1.dp, ghostIconTint),
+                    shape = RoundedCornerShape(8.dp)
+                )
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                val icon = if (isGhostEnabled) R.drawable.check else R.drawable.close
+                Icon(
+                    painter = painterResource(id = icon),
+                    contentDescription = "启用阴影",
+                    tint = ghostIconTint
+                )
+                TetrisText(
+                    text = "阴影",
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+            }
+        }
+        //倒转
+        /*Divider(modifier = Modifier.padding(vertical = 16.dp))
         Surface(
             shape = RoundedCornerShape(10.dp),
             tonalElevation = 8.dp,
@@ -73,9 +108,9 @@ fun HomeScreen(navController: NavController) {
                 )
                 TetrisText(text = stringResource(id = R.string.invert_rotation))
             }
-        }
+        }*/
         // Grid size menu
-        val gridWidth = SettingsHandler.getGridWidth()
+   /*     val gridWidth = SettingsHandler.getGridWidth()
         val gridHeight = SettingsHandler.getGridHeight()
         var gridSizeMenuExpanded by remember { mutableStateOf(false) }
         DropdownMenuSurface(
@@ -112,9 +147,9 @@ fun HomeScreen(navController: NavController) {
                     )
                 }
             }
-        }
-        // Starting height setting menu
-        var startingHeightMenuExpanded by remember { mutableStateOf(false) }
+        }*/
+        // Starting height setting menu 初始高度
+        /*var startingHeightMenuExpanded by remember { mutableStateOf(false) }
         val startingHeight = SettingsHandler.getStartingHeight()
         DropdownMenuSurface(
             title = stringResource(id = R.string.txt_startingHeight),
@@ -140,8 +175,9 @@ fun HomeScreen(navController: NavController) {
                     )
                 }
             }
-        }
-        // Game level setting menu
+        }*/
+
+        // Game level setting menu 游戏等级
         var gameLevelMenuExpanded by remember { mutableStateOf(false) }
         val gameLevel = SettingsHandler.getGameLevel()
         DropdownMenuSurface(

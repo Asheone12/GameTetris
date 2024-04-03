@@ -22,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.muen.gametetris.game.Direction
@@ -33,6 +32,7 @@ import com.muen.gametetris.ui.components.TetrisText
 import com.muen.gametetris.ui.components.UpcomingTetrominoesBox
 import com.muen.gametetris.ui.theme.LocalColors
 import com.muen.gametetris.R
+import com.muen.gametetris.game.Controller
 import kotlinx.coroutines.delay
 
 /* AndroidTetris TetrisScreen: the composable that actually displays the gameplay */
@@ -61,7 +61,8 @@ fun TetrisScreen() {
                 )
                 Stats(viewModel)
                 TimeText(viewModel)
-                val ghostIconTint = if (isGhostEnabled) Color.Green else Color.Red
+                //阴影
+                /*val ghostIconTint = if (isGhostEnabled) Color.Green else Color.Red
                 IconButton(
                     onClick = {
                         isGhostEnabled = !isGhostEnabled
@@ -79,15 +80,16 @@ fun TetrisScreen() {
                         val icon = if (isGhostEnabled) R.drawable.check else R.drawable.close
                         Icon(
                             painter = painterResource(id = icon),
-                            contentDescription = "Enable or disable ghost",
+                            contentDescription = "启用阴影",
                             tint = ghostIconTint
                         )
                         TetrisText(
-                            text = "Ghost",
+                            text = "阴影",
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
-                }
+                }*/
+                //重新开始
                 IconButton(
                     onClick = { viewModel.restartGame() },
                     modifier = Modifier
@@ -101,16 +103,16 @@ fun TetrisScreen() {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painter = painterResource(id = R.drawable.restart),
-                            contentDescription = "Restart the game",
+                            contentDescription = "重新开始游戏",
                             tint = colors.ForegroundColor
                         )
                         TetrisText(
-                            text = "Restart",
+                            text = "重玩",
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
                 }
-                // Pause stuff
+                // Pause stuff 暂停
                 IconButton(
                     onClick = {
                         if (viewModel.gameState.gamePaused) {
@@ -132,11 +134,11 @@ fun TetrisScreen() {
                             if (viewModel.gameState.gamePaused) R.drawable.play else R.drawable.pause
                         Icon(
                             painter = painterResource(id = icon),
-                            contentDescription = "Pause or unpause the game",
+                            contentDescription = "暂停游戏",
                             tint = colors.ForegroundColor
                         )
                         TetrisText(
-                            text = if (viewModel.gameState.gamePaused) "Unpause" else "Pause",
+                            text = if (viewModel.gameState.gamePaused) "继续" else "暂停",
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
@@ -146,7 +148,7 @@ fun TetrisScreen() {
                 modifier = Modifier.weight(0.65f),
                 horizontalAlignment = Alignment.End
             ) {
-                // Right side column, contains the tetris game grid
+                // Right side column, contains the tetris game grid 右侧屏幕
                 val fraction = 0.8f
                 TetrisGrid(
                     width = 180.dp,
@@ -154,7 +156,15 @@ fun TetrisScreen() {
                     viewModel = viewModel,
                     gridWidth = SettingsHandler.getGridWidth(),
                     gridHeight = SettingsHandler.getGridHeight()
-                )
+                ){
+                    when(it){
+                        Controller.Up -> viewModel.rotate()
+                        Controller.Left -> viewModel.move(Direction.Left)
+                        Controller.Right -> viewModel.move(Direction.Right)
+                        Controller.Down -> viewModel.move(Direction.Down)
+                        Controller.DoubleClick ->viewModel.move(Direction.Down)
+                    }
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(fraction = fraction)
@@ -202,9 +212,9 @@ private fun Stats(
 ) {
     val gameStats by remember { derivedStateOf { viewModel.statsState } }
     Column(modifier = modifier) {
-        TetrisText("Lines: ${gameStats.lines}")
-        TetrisText("Score: ${gameStats.score}")
-        TetrisText("Level: ${gameStats.level}")
+        //TetrisText("Lines: ${gameStats.lines}")
+        TetrisText("分数: ${gameStats.score}")
+        //TetrisText("难度: ${gameStats.level}")
     }
 }
 
