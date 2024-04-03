@@ -174,5 +174,5 @@ fun TimeText(viewModel: TetrisScreenViewModel) {
             count = viewModel.increaseGameTimer()
         }
     }
-    TetrisText(text = "Time: $convertedCount")
+    TetrisText(text = "时间: $convertedCount")
 }
