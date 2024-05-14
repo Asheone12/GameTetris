@@ -51,10 +51,10 @@ fun TetrisScreen() {
             ) {
                 // Left side column, contains upcoming tetrominoes grid, stats, ghost chip
                 UpcomingTetrominoesBox(
-                    width = 120.dp,
-                    height = 200.dp,
+                    width = 80.dp,
+                    height = 150.dp,
                     viewModel = viewModel,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(top = 16.dp,bottom = 16.dp, start = 16.dp)
                 )
                 Stats(viewModel)
                 TimeText(viewModel)
@@ -63,7 +63,7 @@ fun TetrisScreen() {
                     onClick = { viewModel.restartGame() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp)
+                        .padding(top = 8.dp, end = 16.dp)
                         .border(
                             BorderStroke(1.dp, colors.ForegroundColor),
                             shape = RoundedCornerShape(8.dp)
@@ -92,7 +92,7 @@ fun TetrisScreen() {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp)
+                        .padding(top = 8.dp, end = 16.dp)
                         .border(
                             BorderStroke(1.dp, colors.ForegroundColor),
                             shape = RoundedCornerShape(8.dp)
@@ -114,7 +114,7 @@ fun TetrisScreen() {
                 }
             }
             Column(
-                modifier = Modifier.weight(0.65f),
+                modifier = Modifier.weight(0.65f).padding(top = 16.dp, bottom = 16.dp,end = 16.dp),
                 horizontalAlignment = Alignment.End
             ) {
                 // Right side column, contains the tetris game grid 右侧屏幕
