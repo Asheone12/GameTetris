@@ -63,7 +63,7 @@ fun TetrisScreen() {
                     onClick = { viewModel.restartGame() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp, end = 16.dp)
+                        .padding(top = 4.dp, end = 8.dp)
                         .border(
                             BorderStroke(1.dp, colors.ForegroundColor),
                             shape = RoundedCornerShape(8.dp)
@@ -92,7 +92,7 @@ fun TetrisScreen() {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp, end = 16.dp)
+                        .padding(top = 4.dp, end = 8.dp)
                         .border(
                             BorderStroke(1.dp, colors.ForegroundColor),
                             shape = RoundedCornerShape(8.dp)
@@ -148,7 +148,7 @@ private fun Stats(
     val gameStats by remember { derivedStateOf { viewModel.statsState } }
     Column(modifier = modifier) {
         //TetrisText("Lines: ${gameStats.lines}")
-        TetrisText("分数: ${gameStats.score}")
+        TetrisText("分数:${gameStats.score}")
         //TetrisText("难度: ${gameStats.level}")
     }
 }
@@ -174,5 +174,5 @@ fun TimeText(viewModel: TetrisScreenViewModel) {
             count = viewModel.increaseGameTimer()
         }
     }
-    TetrisText(text = "时间: $convertedCount")
+    TetrisText(text = "时间:$convertedCount")
 }
