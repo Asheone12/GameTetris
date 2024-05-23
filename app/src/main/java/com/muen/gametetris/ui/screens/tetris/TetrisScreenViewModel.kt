@@ -129,7 +129,7 @@ class TetrisScreenViewModel : ViewModel() {
 
     fun linesCompleted(args: LinesCompletedEventArgs) {
         // Calculate score
-        val scoreMultiplication = listOf(40, 100, 300, 1200)
+        val scoreMultiplication = listOf(2, 5, 15, 60)
         val score = statsState.score + (scoreMultiplication[args.lines.size-1] * (statsState.level + 1) * statsState.previousLinesCompleted)
         statsState = statsState.copy(
             lines = api.lines(),

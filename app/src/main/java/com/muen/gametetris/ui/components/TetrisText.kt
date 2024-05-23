@@ -46,7 +46,7 @@ fun DisplayLarge(
         modifier = modifier,
         text = text,
         color = MaterialTheme.colorScheme.primary,
-        style = MaterialTheme.typography.displayLarge,
+        style = MaterialTheme.typography.displayMedium,
         textAlign = textAlign
     )
 }
